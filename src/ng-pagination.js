@@ -76,7 +76,7 @@
               low = 1;
               high = scope.pageCount;
             } else {
-              v = Math.ceil(visiblePageCount / 2);
+              v = Math.floor(visiblePageCount / 2);
               low = Math.max(scope.currentPage - v, 1);
               high = Math.min(low + visiblePageCount - 1, scope.pageCount);
 
@@ -90,8 +90,10 @@
             }
           }
 
+          var isFirst = true;
           scope.$watch('currentPage', function (a, b) {
-            if (a !== b) {
+            if (a !== b || isFirst) {
+              isFirst = false;
               build();
               scope.onPageChange();
             }
